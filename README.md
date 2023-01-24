@@ -15,7 +15,6 @@
 
 - Dependencies
   - pyinstaller v5.7.0
-
 - Optional Dependencies
   - colorama 0.4.6
 
