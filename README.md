@@ -2,7 +2,7 @@
 
 ### _I had started some Python tutorials and so this project is for reference_
 
-##### This repo is a working reference project that creates a pyi-makespec file for a python script.
+##### This repo is a working reference project that creates a pyi-makespec string for use with pyinstaller.
 
 ---
 

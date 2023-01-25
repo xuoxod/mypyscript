@@ -1,11 +1,12 @@
 #! /usr/bin/python3
 
-import argparse
+import argparse,os
+from custom_modules.FileValidator import file_exists, is_file, is_dir, is_readable
 from custom_modules.ConsoleMessenger import CONSOLE_MESSENGER_SWITCH as cms
 from custom_modules.Utils import exit_prog
 from custom_modules.FileDialog import open_file_type
-from custom_modules.FileValidator import file_exists, is_file, is_dir, is_readable
 from custom_classes.FileInterrorgator import file_interrogator as file_i
+from custom_modules.FileOperator import write_to_file as write_file
 from custom_modules.PlatformConstants import LINE_SEP as lsep
 from custom_modules.MyLogger import create_log as log
 
@@ -160,6 +161,7 @@ if args.path:
                         app_log_dir_name,
                         app_log_name,
                     )
+                    os.system("{}".format(speci_file_data))
                     exit_prog()
                 else:
                     e_header = cus(255, 100, 100, "Error:")
@@ -199,6 +201,7 @@ elif args.dialog:
         if is_readable(file_path):
             speci_file_data += " {}".format(file_path)
             log("command: {}".format(speci_file_data), app_log_dir_name, app_log_name)
+            os.system("{}".format(speci_file_data))
             exit_prog()
         else:
             e_header = cus(255, 100, 100, "Error:")

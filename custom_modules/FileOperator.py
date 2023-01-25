@@ -69,16 +69,13 @@ def save_new_file(file_path, data=None):
 def write_to_file(file_path, data=None):
     if not data == None:
         string_data = str(data)
-
         if file_exists(file_path):
             deleted = delete_file(file_path)
-
             if deleted:
                 with open(file_path, "w") as f:
                     f.write(string_data)
-
         else:
             with open(file_path, "w") as f:
                 f.write(string_data)
-
         return file_exists(file_path)
+    return False
