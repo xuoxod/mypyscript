@@ -1,6 +1,6 @@
 #! /usr/bin/python3
 
-import argparse,os
+import argparse, os
 from custom_modules.FileValidator import file_exists, is_file, is_dir, is_readable
 from custom_modules.ConsoleMessenger import CONSOLE_MESSENGER_SWITCH as cms
 from custom_modules.Utils import exit_prog
@@ -11,8 +11,8 @@ from custom_modules.PlatformConstants import LINE_SEP as lsep
 from custom_modules.MyLogger import create_log as log
 
 cus = cms["custom"]
-desc = "This program packages python script files"
-epil = "Packages python scripts to be distributed to users"
+desc = "This program creates a specfile and runs pyinstaller separately"
+epil = "Creates a specification file for use with pyinstaller"
 vers = "%prog 0.1"
 speci_file_data = "pyi-makespec "
 app_log_dir_name = "scriptpackager"
@@ -81,6 +81,14 @@ specification.add_argument(
 )
 specification.add_argument(
     "-D", "--dir", dest="dir", action="store_true", help="Directory output"
+)
+specification.add_argument(
+    "-S",
+    "--specpath",
+    dest="specpath",
+    metavar="specpath",
+    nargs=1,
+    help="Path to save the spec-file. Defaults to current directory.",
 )
 
 get_file.add_argument(
@@ -156,6 +164,9 @@ if args.path:
             if file_ext == ".py":
                 if is_readable(file_path):
                     speci_file_data += " {}".format(file_path)
+                    if args.specpath:
+                        specpath = args.specpath[0]
+                        speci_file_data += " --specpath {}".format(specpath)
                     log(
                         "command: {}".format(speci_file_data),
                         app_log_dir_name,
@@ -200,6 +211,9 @@ elif args.dialog:
     if file_path:
         if is_readable(file_path):
             speci_file_data += " {}".format(file_path)
+            if args.specpath:
+                specpath = args.specpath[0]
+                speci_file_data += " --specpath {}".format(specpath)
             log("command: {}".format(speci_file_data), app_log_dir_name, app_log_name)
             os.system("{}".format(speci_file_data))
             exit_prog()
