@@ -1,6 +1,6 @@
 import os
 from .Utils import numbered_date_time_stamp as timestamp, make_directory
-from .FileOperator import append_data_to_file as append_to_file
+from .FileOperator import append_to_file
 from .PlatformConstants import USER_DIR as udir, SEP as sep, LINE_SEP as lsep
 
 

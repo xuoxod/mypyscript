@@ -42,6 +42,7 @@ parser.error = error_handler
 parser.version = vers
 get_file = parser.add_mutually_exclusive_group()
 specification = parser.add_argument_group()
+pyinstaller = parser.add_argument_group()
 
 specification.add_argument_group("script", "Create a specification file")
 specification.add_argument(
@@ -91,6 +92,7 @@ specification.add_argument(
     help="Path to save the spec-file. Defaults to current directory.",
 )
 
+get_file.add_argument_group("file path", "Handles accessing file path")
 get_file.add_argument(
     "-p",
     "--path",
@@ -107,8 +109,25 @@ get_file.add_argument(
     help="Indicates the file path from file dialog.",
 )
 
+pyinstaller.add_argument_group("installer", "Packages python script")
+pyinstaller.add_argument("-e", "--exe", dest="exe", nargs=1, help="Run pyinstaller")
+
 
 args = parser.parse_args()
+
+if args.exe:
+    file_path = args.exe[0]
+    if file_exists(file_path):
+        if is_file(file_path):
+            if is_readable(file_path):
+                file_i.set_path(file_path)
+                file_ext = file_i.extension()
+
+                if file_ext == ".py":
+                    print("Packaging {} script\n".format(file_path))
+                elif file_ext == ".spec":
+                    print("Using spec file {}\n".format(file_path))
+    exit_prog()
 
 if args.name:
     speci_file_data += "-n {} ".format(args.name[0])
